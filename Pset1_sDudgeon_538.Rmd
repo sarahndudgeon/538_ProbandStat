@@ -1,0 +1,324 @@
+---
+title: "Pset1_SDudgeon_538"
+author: "Sarah Dudgeon"
+date: "9/8/2020"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### S&DS 238a/538a, Fall, 2020
+## Problem set #1
+### Due Friday 9/11, or actually by Sunday is ok for this pset
+
+#1.  [[Problems with birthday problems on late-night television]] Take a look at this short video excerpt from The TonightShow, in which the host (Johnny Carson) is struggling a bit with birthday problems.*Carson seems to have beenthinking of a different kind of question along these lines: How many people (other than you) should be in a room in order to have a high probability that somebody sharesyourbirthday?
+#(a)  Suppose there are k people in the room other than you, and let p(k) denote the probability that at least one of those k people shares your birthday. Find a formula for p(k). [Hint: This is one minus the probability that each of thekpeople has a birthday different from yours.]
+
+364 options (to exclude my own bday) of 365 total days in a year.
+$$
+P(k) = 1-(\frac{364}{365})^k
+$$
+
+
+#(b) Let k∗ be the smallest k such that p(k) ≥ 0.9. Calculate k∗.
+$$
+0.9 = 1-(\frac{364}{365})^k\\
+k = \log_{364/365} 0.1
+$$
+
+```{r}
+kStar <- log(0.1,(364/365))
+```
+
+
+#(c) Let’s run a simulation to check your answer to part (b) and get some additional information. To do this, repeat the following experiment many times (1000, say, or 10,000 if it doesn’t take too long):
+#i. generate a random birthday for yourself,
+```{r}
+myBday <- sample(1:365,1); myBday
+```
+
+  
+#ii. generate k∗ random birthdays for the k∗ other people in the room,
+```{r}
+otherBdays <- sample(1:365, round(839), replace = T); #otherBdays
+#otherBdays
+```
+
+
+#iii. record how many of the k∗ other people match your birthday, and store that number in a vector of results. Report the fraction of repetitions for which there was at least one match of your birthday, and also make a plot of the frequency table of the number of matches of your birthday.†
+```{r}
+results <- otherBdays %in% myBday
+#results
+sum(results)
+#mean(results)
+```
+
+
+Demonstrate this simulation 10000x:
+```{r}
+oneParty <- function(k){
+  myBday <- sample(1:3,1)
+  otherBdays <- sample(1:3, round(k), replace = T)
+  results <- otherBdays %in% myBday
+  return(sum(results))
+}
+
+### For loop below is giving me a lot of issues. the results are not printing and I cannot store my results per iteration. this is causing an issue for my output, inhibiting my ability to repeat the simulation more than once, and use said results to create a histogram per iteration. Please Help!!! What am I missing??
+#nreps <- 10
+#results <- rep(0, nreps)
+#for (i in nreps){
+#  myBday <- sample(1:3,1)
+#  print(myBday)
+#  otherBdays <- sample(1:3, round(5), replace = T)
+#  print(otherBdays)
+#  results[i] <- sum(otherBdays %in% myBday)
+#}
+
+#hist(results)
+#results
+```
+
+
+
+#2. [[A few miscellaneous R exercises]]
+#(a) Show how to create the following vectors in R (without typing out all of the elements of the vectors!):
+#i. (20, 19, 18, 17, ..., 1)
+```{r}
+x <- 20:1; x
+```
+
+
+#ii. ("x1", "x2", "x3", ..., "x20")
+```{r}
+y <- paste0('x', 1:20); y
+```
+
+
+#iii. (3, 3, ..., 3, 5, 5, ..., 5, 2, 2, ..., 2) where there are 20 occurrences of 3, 10 occurrences of 5, and 30 occurrences of 2. [[Relevant functions include paste and rep.]]
+```{r}
+z <- c(rep(3, 20), rep(5, 10), rep(2, 30)); z
+```
+
+
+#(b) Calculate the sum
+$$
+sup(50)∑sub(i=21)(2i^3 +3i^2)
+$$
+
+#i. without using a loop.
+```{r}
+results <- 0
+
+i <- 21
+results <- append(results, sum((2*i^3) + (3*i^2)))
+
+i <- 22
+results <- append(results, sum((2*i^3) + (3*i^2)))
+
+i <- 23
+results <- append(results, sum((2*i^3) + (3*i^2)))
+
+i <- 24
+results <- append(results, sum((2*i^3) + (3*i^2)))
+
+i <- 25
+results <- append(results, sum((2*i^3) + (3*i^2)))
+
+i <- 26
+results <- append(results, sum((2*i^3) + (3*i^2)))
+
+i <- 27
+results <- append(results, sum((2*i^3) + (3*i^2)))
+
+i <- 28
+results <- append(results, sum((2*i^3) + (3*i^2)))
+
+i <- 29
+results <- append(results, sum((2*i^3) + (3*i^2)))
+
+i <- 30
+results <- append(results, sum((2*i^3) + (3*i^2)))
+
+i <- 31
+results <- append(results, sum((2*i^3) + (3*i^2)))
+
+i <- 32
+results <- append(results, sum((2*i^3) + (3*i^2)))
+
+i <- 33
+results <- append(results, sum((2*i^3) + (3*i^2)))
+
+i <- 34
+results <- append(results, sum((2*i^3) + (3*i^2)))
+
+i <- 35
+results <- append(results, sum((2*i^3) + (3*i^2)))
+
+i <- 36
+results <- append(results, sum((2*i^3) + (3*i^2)))
+
+i <- 37
+results <- append(results, sum((2*i^3) + (3*i^2)))
+
+i <- 38
+results <- append(results, sum((2*i^3) + (3*i^2)))
+
+i <- 39
+results <- append(results, sum((2*i^3) + (3*i^2)))
+
+i <- 40
+results <- append(results, sum((2*i^3) + (3*i^2)))
+
+i <- 41
+results <- append(results, sum((2*i^3) + (3*i^2)))
+
+i <- 42
+results <- append(results, sum((2*i^3) + (3*i^2)))
+
+i <- 43
+results <- append(results, sum((2*i^3) + (3*i^2)))
+
+i <- 44
+results <- append(results, sum((2*i^3) + (3*i^2)))
+
+i <- 45
+results <- append(results, sum((2*i^3) + (3*i^2)))
+
+i <- 46
+results <- append(results, sum((2*i^3) + (3*i^2)))
+
+i <- 47
+results <- append(results, sum((2*i^3) + (3*i^2)))
+
+i <- 48
+results <- append(results, sum((2*i^3) + (3*i^2)))
+
+i <- 49
+results <- append(results, sum((2*i^3) + (3*i^2)))
+
+i <- 50
+results <- append(results, sum((2*i^3) + (3*i^2)))
+
+results
+sum(results)
+```
+
+
+#ii. using a loop.
+```{r}
+nrep <- sum(21:50>1)
+results <- rep(0, nrep)
+for (i in (21:50)) {
+  results[i] <- sum((2*i^3) + (3*i^2))
+}
+#results
+sum(results)
+```
+
+
+#3. A hand of “poker dice” is obtained by randomly rolling 5 dice. Show that 
+#(a) The probability of a one-pair hand is .4630.
+#[[One pair means two of the dice show the same number and the remaining 3 dice all show different numbers.]]
+```{r}
+(1*1/6*5/6*4/6*3/6)*factorial(5)/(factorial(3)*factorial(2))
+```
+
+
+#(b) The probability of a full house is .0386.
+#[[A full house means three of the dice share one number and the remaining two dice share a different number.]]
+```{r}
+(1*1/6*5/6*1/6*1/6)*factorial(5)/(factorial(3)*factorial(2))
+```
+
+
+#(c) What is the probability of a two-pair hand?
+#[[Two pairs means two of the dice share one number, two dice share a different number, and the remaining die shows a third number.]]
+```{r}
+(1*1/6*5/6*1/6*4/6)*(factorial(5)/(factorial(3)*factorial(2)))*(factorial(3)/(factorial(1)*factorial(2)))*0.5
+```
+
+
+#4. Perform a simulation to check your answer for part (c) of the previous problem.
+
+```{r}
+#set params
+k <- 5 #number die
+nrep <- 10000 #number sim reps
+fullHouse <- rep(0, nrep)
+
+
+#run with a single roll
+roll <- sample(x=1:6, size = k, replace = T)
+roll
+results <- table(roll)
+results
+sum((length(results) == 3) && (max(results) == 2))
+
+#run sim nrep times
+for(i in 1:nrep){
+  roll <- sample(x=1:6, size = k, replace = T)
+  results <- table(roll)
+  fullHouse[i] <- sum((length(results) == 3) && (max(results) == 2))
+}
+
+mean(fullHouse)
+
+```
+
+
+
+#5. [[Practicing with some basic general probability concepts]]
+#(a) Given events A and B, we define the symmetric difference of A and B, denoted A △ B, to be the set of all outcomes that are in A or in B but not in both. Find an expression for P(A △ B) in terms of the probabilities P(A), P(B), and P(A∩B), and prove your formula using the axioms of probability.‡
+$$
+P(A\Delta B) = P(AwithoutB) + P(BwithoutA)\\
+
+P(A) = P(A without B) + P(A\cap B)\\
+
+P(B) = P(B without A) + P(A\cap B)\\
+
+P(A\Delta B) = P(A) + P(B) - 2P(A\cap B)\\
+$$
+
+
+#(b) Let A and B be events with positive probability.§ Suppose the occurrence of A makes B more likely, that is, P(B ∣ A) > P(B). Is it necessarily true that the occurrence of B makes A more likely? Prove or give a counterexample.
+$$
+P(A) > 1\\
+P(B) > 1\\
+P(B|A) = P(AB)/P(A)\\
+P(AB)/P(A) > P(B)\\
+P(AB)/P(B) > P(A)\\
+P(AB)/P(B) = P(A|B)\\
+P(A|B) > P(A)\\
+$$
+Yes, the presence of A given B will make A more likely, just as the converse is true: the presence of B given A will make B more likely. 
+
+#(c) Suppose A and B are events such that P(A) = 0.6 and P(A∪B) = 0.9.
+#i. Find P(B) if A and B are disjoint.
+if disjoint, 
+$$
+P(A) = 0.6\\
+P(A\cup B) = 0.9 = P(A) + P(B) - P(A\cap B)\\
+0.9 = 0.6 + P(B) - P(A\cap B)\\
+0.3 = P(B) - P(A\cap B)\\
+P(A\cap B) = 0\\
+P(B) = 0.3
+$$
+
+#ii. Find P(B) if A and B are independent.
+$$
+P(A) = 0.6\\
+P(A\cup B) = 0.9 = P(A) + P(B) - P(A\cap B)\\
+0.9 = 0.6 + P(B) - P(A\cap B)\\
+0.3 = P(B) - P(A\cap B)\\
+P(A\cap B) = P(A)P(B)\\
+0.3 = P(B)-0.6P(B)\\
+0.3 = 0.4P(B)\\
+P(B) = 0.75
+$$
+
+
